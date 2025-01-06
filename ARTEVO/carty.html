@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Shopping Cart</title>
+    <header>
+    <nav>
+        <div class="logo">
+           
+          <h1> Artevo &#128151</h1>
+        </div>
+        <ul>
+            <li><a href="#"><i class="fa fa-home"></i></a></li>
+            <li><a href="#"><i class="fa fa-shopping-bag"></i></a>
+         </li>
+            <li><a href="#"><i class="fa fa-phone"></i></a></li>
+            </ul>
+        
+    </nav>
+    </header>
+<style>
+               header {
+                  background-color: purple;
+                  color: white;
+                  padding:  0rem;
+                  position: sticky;
+                  top: 0;
+                  z-index: 2000;
+                }
+
+           header nav ul {
+               list-style: none;
+               display: flex;
+               justify-content: flex-end;
+              }
+
+        header nav ul li {
+                   margin: 0 15px;
+                    } 
+
+       header nav ul li a {
+           color: white;
+           text-decoration: none;
+           font-weight: bold;
+            }
+
+         header .logo h1 {
+             font-size: 1.8rem;
+             color: white;
+             }
+
+
+          header nav h1 {
+                 font-size: 24px; 
+                 font-weight: bold;
+                 text-align: left;
+              }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            padding: 20px;
+            background-color: #f9f9f9;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        #cart-items-container {
+            margin-top: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .cart-item {
+            background-color: #fff;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .cart-item img {
+            width: 50px;
+            height: 50px;
+            margin-right: 20px;
+            object-fit: cover;
+        }
+
+        .cart-item .item-details {
+            flex: 1;
+        }
+
+        .cart-item .item-price {
+            font-weight: bold;
+            margin-left: 10px;
+        }
+
+        #cart-summary {
+            margin-top: 30px;
+            text-align: center;
+            font-size: 18px;
+        }
+
+        button {
+            background-color: purple;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        button:hover {
+            background-color: rgb(157, 85, 157);
+        }
+
+        button:active {
+            transform: scale(0.98);
+        }
+
+        .quantity-control button {
+            background-color: #28a745;
+            padding: 5px 10px;
+            border-radius: 4px;
+            margin: 0 5px;
+        }
+
+        .quantity-control button:hover {
+            background-color: #a24b9e;
+        }
+
+        .remove-button {
+            background-color: #dc3545;
+            padding: 5px 10px;
+            border-radius: 4px;
+        }
+
+        .remove-button:hover {
+            background-color: #c82333;
+        }
+
+        .cart-item .item-quantity {
+            display: flex;
+            align-items: center;
+        }
+        footer {
+    background-color: purple;
+    color: white;
+    text-align: center;
+
+    padding: 1rem;
+    margin-top: 2rem;
+} 
+
+    </style>
+</head>
+<body>
+
+    <h1>Your Shopping Cart</h1>
+
+    <div id="cart-items-container">
+        <!-- Cart items will be dynamically inserted here -->
+    </div>
+
+    <div id="cart-summary">
+        <h3>Total: RS.<span id="total-price">0.00</span></h3>
+        <button onclick="checkout()">Proceed to Checkout</button>
+    </div>
+
+    <script>
+        // Load cart from localStorage and display it
+        function loadCart() {
+            let cart = JSON.parse(localStorage.getItem("cart")) || [];
+            let cartItemsContainer = document.getElementById("cart-items-container");
+            let totalPrice = 0;
+
+            cartItemsContainer.innerHTML = ""; // Clear existing items
+
+            // If the cart is empty, show a message
+            if (cart.length === 0) {
+                cartItemsContainer.innerHTML = "<p>Your cart is empty.</p>";
+            }
+
+            // Loop through cart items and di"div");
+                cartItem.classList.add("cart-item");
+
+                cartItem.innerHTML = <img src="${item.image}" alt="${item.name}">
+                    <div class="item-details">
+                        <p><strong>${item.name}</strong></p>
+                        <div class="item-quantity">
+                            <button class="quantity-control" onclick="changeQuantity(${index}, 'increase')">+</button>
+                            <span>Quantity: ${item.quantity}</span>
+                            <button class="quantity-control" onclick="changeQuantity(${index}, 'decrease')">-</button>
+                        </div>
+                    </div>
+                    <div class="item-price">
+                        $${(item.price * item.quantity).toFixed(2)}
+                        <button class="remove-button" onclick="removeFromCart(${index})">Remove</button>
+                    </div>
+    cart.forEach((item, index) => {
+        totalPrice += item.price * item.quantity;
+
+        let cartItem = document.createElement("div");
+        cartItem.classList.add("cart-item");
+
+        cartItem.innerHTML = <img src="${item.image}" alt="${item.name}">
+            <div class="item-details">
+                <p><strong>${item.name}</strong></p>
+                <div class="item-quantity">
+                    <button class="quantity-control" onclick="changeQuantity(${index}, 'increase')">+</button>
+                    <span>Quantity: ${item.quantity}</span>
+                    <button class="quantity-control" onclick="changeQuantity(${index}, 'decrease')">-</button>
+                </div>
+            </div>
+            <div class="item-price">
+                RS.{(item.price * item.quantity).toFixed(2)}
+                <button class="remove-button" onclick="removeFromCart(${index})">Remove</button>
+            </div>
+        `;
+
+        cartItemsContainer.appendChild(cartItem);
+    });
+
+    // Display total price
+    document.getElementById("total-price").textContent = totalPrice.toFixed(2);
+}
+</script>
+<footer>
+        <p>&copy; 2024 Artevo. All rights reserved.</p>
+    </footer>
+    </body>
+    </html>
+    
+
+           

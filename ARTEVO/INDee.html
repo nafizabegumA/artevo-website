@@ -6,11 +6,14 @@
     <title>Artevo.com</title>
     <link rel="stylesheet" href="indee.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    
+
 </head>
 <body>
     <div class="offer-banner">
+        
         <p>🎉 Special Offer: Get 15% off on your first order! 🎉</p>
-        <button class="close-btn" onclick="closeOfferBanner()">X</button>
+        
     </div>
 
 
@@ -26,7 +29,15 @@
                 <li><a href="#"><i class="fa fa-shopping-bag"></i>Shop</a>
              </li>
                 <li><a href="#"><i class="fa fa-phone"></i>Contact</a></li>
-                <li><a href="cart.html"><i class="fa fa-shopping-cart"></i>Cart (0)</a></li>
+                <li><a href="javascript:void(0);" id="loginLink" onclick="openLoginForm()"><i class="fa fa-sign-in" aria-hidden="true"></i>Login</a></li>
+            <!-- Hello message dropdown -->
+            <li class="dropdown" id="userDropdown" style="display: none;">
+                <a href="javascript:void(0);" class="dropbtn" id="userGreeting">Hello, User</a>
+                <div class="dropdown-content">
+                    <a href="javascript:void(0);" onclick="logout()">Log out</a>
+                </div>
+            </li>
+            <li><a href="carty.html"><i class="fa fa-shopping-cart"></i>Cart (0)</a></li>
             </ul>
             <div class="search-bar">
                 <input type="text"placeholder="search product....."id="search">
@@ -34,6 +45,180 @@
             </div>
         </nav>
     </header>
+<!-- Modal: Sign Up Popup -->
+<div id="signupModal" class="modal">
+    <div class="modal-content">
+        <button class="close" onclick="closeModal()">&times;</button>
+        <h2>Create Your Account for Exclusive Access</h2>
+        <p>Join Artevo today and enjoy personalized recommendations, early access to new products, and special discounts tailored just for you!</p>
+        <a href="signup.html" class="cta-button">Sign Up Now</a>
+    </div>
+</div>
+<style>
+/* General Styles for the popup */
+.login-popup {
+    display: none; /* Hidden by default */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+/* The popup container */
+.login-form, .signup-form {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    width: 300px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+h3 {
+    text-align: center;
+    color: #333;
+}
+
+input {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+button {
+    width: 100%;
+    padding: 12px;
+    background-color: rgb(185, 104, 185);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    margin:5px 0;
+}
+
+/* Specific button styles for Submit and Cancel */
+button.submit {
+    padding: 14px; /* Larger padding for Submit button */
+    font-size: 18px;
+    width:48%; /* Larger font size for Submit button */
+}
+
+button.cancel {
+    padding: 5px; /* Smaller padding for Cancel button */
+    font-size: 14px; /* Smaller font size for Cancel button */
+    background-color: #ccc; /* Grey background for Cancel button */
+    width:48%;
+}
+
+
+/* Hover effects for Submit and Cancel */
+button:hover {
+    background-color: purple;
+}
+
+button.cancel:hover {
+    background-color: #aaa; /* Lighter grey for Cancel hover */
+}
+.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 24px;
+    color: #333;
+    cursor: pointer;
+    background: none;
+    border: none;
+}
+
+/* Close button hover effect */
+.close-btn:hover {
+    color: #ff0000; /* Red color on hover */
+}
+
+
+p {
+    text-align: center;
+}
+
+p a {
+    color: #007BFF;
+    cursor: pointer;
+}
+
+p a:hover {
+    text-decoration: underline;
+}
+</style>
+
+        
+<div class="login-popup" id="loginPopup">
+    <div class="login-form" id="loginForm">
+        <h3>Login</h3>
+        <input type="text" id="username" placeholder="Enter your username" required>
+        <input type="password" id="password" placeholder="Enter your password" required>
+        <button onclick="login()">Login</button>
+        <button onclick="closeLoginForm()">Cancel</button>
+        <p>New user? <a href="javascript:void(0)" onclick="toggleForms()">Sign Up</a></p>
+    </div>
+
+    <div class="signup-form" id="signupForm" style="display:none;">
+      
+        <h3>Sign Up</h3>
+        <input type="text" id="signupUsername" placeholder="Enter your username" required>
+        <input type="password" id="signupPassword" placeholder="Enter your password" required>
+        <input type="email" id="signupEmail" placeholder="Enter your email" required>
+        <button onclick="signUp()">Sign Up</button>
+        <button onclick="closeLoginForm()">Cancel</button>
+        <p>Already have an account? <a href="javascript:void(0)" onclick="toggleForms()">Login</a></p>
+    </div>
+</div>
+<script>
+    // Function to toggle between Login and SignUp forms
+    function toggleForms() {
+        var loginForm = document.getElementById('loginForm');
+        var signupForm = document.getElementById('signupForm');
+        
+        if (loginForm.style.display === "none") {
+            loginForm.style.display = "block";
+            signupForm.style.display = "none";
+        } else {
+            loginForm.style.display = "none";
+            signupForm.style.display = "block";
+        }
+    }
+
+    // Login function
+    function login() {
+        var username = document.getElementById('username').value;
+        var password = document.getElementById('password').value;
+        // Add login logic here
+        console.log('Login with', username, password);
+    }
+
+    // Sign Up function
+    function signUp() {
+        var username = document.getElementById('signupUsername').value;
+        var password = document.getElementById('signupPassword').value;
+        var email = document.getElementById('signupEmail').value;
+        // Add sign-up logic here
+        console.log('Sign Up with', username, password, email);
+    }
+
+    // Close the login popup
+    function closeLoginForm() {
+        document.getElementById('loginPopup').style.display = "none";
+    }
+</script>
+
+
 
     <section class="hero">
         <h2>Discover the art of painting,delivered to you📦</h2>
